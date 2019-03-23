@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 
 import * as actions from "../../actions";
+import Signup from "../Signup";
+import Signin from "../Signin";
 
 class ButtonAppBar extends React.Component {
     constructor(props) {
@@ -24,22 +26,29 @@ class ButtonAppBar extends React.Component {
             <Container>
                 <Menu secondary>
                     <Menu.Menu position='right'>
-                        <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
+                        <Menu.Item name='Add Company' active={activeItem === 'Add Company'} onClick={this.handleItemClick} />
                         <Menu.Item
-                            name='messages'
-                            active={activeItem === 'messages'}
+                            name='Pricing'
+                            active={activeItem === 'Pricing'}
                             onClick={this.handleItemClick}
                         />
                         <Menu.Item
-                            name='friends'
-                            active={activeItem === 'friends'}
+                            name='About'
+                            active={activeItem === 'About'}
                             onClick={this.handleItemClick}
                         />
-                        <Menu.Item
-                            name='logout'
-                            active={activeItem === 'logout'}
-                            onClick={this.logout}
-                        />
+                        {
+                            this.props.isAuth?
+                                <Menu.Item
+                                    name='logout'
+                                    active={activeItem === 'logout'}
+                                    onClick={this.logout}
+                                />:
+                                [<Signup key="signup"/>,
+                                <Signin key="signin"/>]
+
+                        }
+                        
                     </Menu.Menu>
                 </Menu>
             </Container>

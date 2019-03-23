@@ -11,7 +11,7 @@ import Home from "./components/Home";
 import Signin from "./components/Signin";
 import Signup from "./components/Signup";
 import reducers from "./reducers"
-import authGuard from "./components/HOCs/auth-guard";
+//import authGuard from "./components/HOCs/auth-guard";
 
 const JWT_TOKEN = localStorage.getItem("JWT_TOKEN")
 

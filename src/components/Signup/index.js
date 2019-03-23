@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { reduxForm, Field } from "redux-form";
-import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react';
+import { Button, Form, Modal, Segment , Menu} from 'semantic-ui-react';
 
 import * as actions from "../../actions"
 
@@ -22,84 +22,70 @@ export const renderInput = ({
 class SignUp extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = { open: false };
 
         this.onsubmit = this.onsubmit.bind(this);
         this.responseGoogle = this.responseGoogle.bind(this);
     }
 
+    show = () => () => this.setState({ open: true })
+    close = () => this.setState({ open: false })
+
     async onsubmit(formData) {
         await this.props.signup(formData);
-        if(!this.props.errorMessage){
+        if (!this.props.errorMessage) {
             this.props.history.push("/");
+            this.setState({open: false})
         }
     }
 
-    async responseGoogle (response){
+    async responseGoogle(response) {
         console.log(response.accessToken);
         await this.props.loginWithGoogle({
-            access_token : response.accessToken
+            access_token: response.accessToken
         });
-        if(!this.props.errorMessage){
+        if (!this.props.errorMessage) {
             this.props.history.push("/");
         }
     }
 
 
     render() {
-        const { classes, handleSubmit } = this.props;
+        const { handleSubmit } = this.props;
         return (
+            <React.Fragment>
+                <Menu.Item size="mini" onClick={this.show()}>Sign Up</Menu.Item >
 
-            <div className='login-form'>
-            {/*
-              Heads up! The styles below are necessary for the correct render of this example.
-              You can do same with CSS, the main idea is that all the elements up to the `Grid`
-              below must have a height of 100%.
-            */}
-            <style>{`
-              body > div,
-              body > div > div,
-              body > div > div > div.login-form {
-                height: 100%;
-              }
-            `}
-            </style>
-            <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
-              <Grid.Column style={{ maxWidth: 450 }}>
-                <Header as='h2' color='teal' textAlign='center'>
-                  <Image src='/logo.png' /> Log-in to your account
-                </Header>
-                <Form onSubmit={handleSubmit(this.onsubmit)} size='large'>
-                  <Segment stacked>
-                    <Field
-                        component={Form.Input}
-                        name="email"
-                        fluid 
-                        icon='user' 
-                        iconPosition='left' 
-                        placeholder='E-mail address' 
-                    />
-                    <Field
-                        name="password"
-                        component={Form.Input}
-                      fluid
-                      icon='lock'
-                      iconPosition='left'
-                      placeholder='Password'
-                      type='password'
-                    />
-        
-                    <Button color='teal' fluid size='large'>
-                      Login
-                    </Button>
-                  </Segment>
-                </Form>
-                <Message>
-                  New to us? <a href='#'>Sign Up</a>
-                </Message>
-              </Grid.Column>
-            </Grid>
-          </div>
+                <Modal size="mini" open={this.state.open} onClose={this.close}>
+                    <Modal.Header>Delete Your Account</Modal.Header>
+                    <Modal.Content>
+                        <Form onSubmit={handleSubmit(this.onsubmit)} size='large'>
+                            <Segment stacked>
+                                <Field
+                                    component={Form.Input}
+                                    name="email"
+                                    fluid
+                                    icon='user'
+                                    placeholder='E-mail address'
+                                />
+                                <Field
+                                    name="password"
+                                    component={Form.Input}
+                                    fluid
+                                    icon='lock'
+                                    iconPosition='left'
+                                    placeholder='Password'
+                                    type='password'
+                                />
+
+                                <Button color='teal' fluid size='large'>
+                                    Login
+                                </Button>
+                            </Segment>
+                        </Form>
+                    </Modal.Content>
+                </Modal>
+            </React.Fragment>
         );
     }
 }
