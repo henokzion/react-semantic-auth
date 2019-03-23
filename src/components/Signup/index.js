@@ -1,67 +1,25 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import FormControl from '@material-ui/core/FormControl';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import withStyles from '@material-ui/core/styles/withStyles';
-import { reduxForm, Field } from "redux-form";
+import React from 'react';
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { GoogleLogin } from "react-google-login";
+import { reduxForm, Field } from "redux-form";
+import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react';
 
 import * as actions from "../../actions"
 
-const styles = theme => ({
-    main: {
-        width: 'auto',
-        display: 'block', // Fix IE 11 issue.
-        marginLeft: theme.spacing.unit * 3,
-        marginRight: theme.spacing.unit * 3,
-        [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-            width: 400,
-            marginLeft: 'auto',
-            marginRight: 'auto',
-        },
-    },
-    paper: {
-        marginTop: theme.spacing.unit * 8,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
-    },
-    avatar: {
-        margin: theme.spacing.unit,
-        backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
-        width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing.unit,
-    },
-    submit: {
-        marginTop: theme.spacing.unit * 3,
-    },
-});
 export const renderInput = ({
     input,
     label,
     meta: { touched, error },
     ...custom
 }) => (
-        <Input
+        <input
             {...input}
             {...custom}
         />
     )
 
 
-class SignUp extends Component {
+class SignUp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -92,56 +50,61 @@ class SignUp extends Component {
         const { classes, handleSubmit } = this.props;
         return (
 
-            <main className={classes.main}>
-                <CssBaseline />
-                <Paper className={classes.paper}>
-                    <Avatar className={classes.avatar}>
-                        <LockOutlinedIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Sign UP
-                    </Typography>
-                    <form className={classes.form} onSubmit={handleSubmit(this.onsubmit)}>
-                        <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="email">Email Address</InputLabel>
-                            <Field component={renderInput} id="email" name="email" autoComplete="email" autoFocus />
-                        </FormControl>
-                        <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="password">Password</InputLabel>
-                            <Field component={renderInput} name="password" type="password" id="password" autoComplete="current-password" />
-                        </FormControl>
-                        {
-                            this.props.errorMessage ?
-                                <Typography component="h6" >
-                                    {this.props.errorMessage}
-                                </Typography> : ""
-                        }
-                        <GoogleLogin
-                            clientId="366510432233-cp0s337b63lkjg2g8sc2gvjas26gt3ns.apps.googleusercontent.com"
-                            buttonText=""
-                            onSuccess={this.responseGoogle}
-                            onFailure={this.responseGoogle}
-                        />
-                      
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                        >
-                            Sign Up
+            <div className='login-form'>
+            {/*
+              Heads up! The styles below are necessary for the correct render of this example.
+              You can do same with CSS, the main idea is that all the elements up to the `Grid`
+              below must have a height of 100%.
+            */}
+            <style>{`
+              body > div,
+              body > div > div,
+              body > div > div > div.login-form {
+                height: 100%;
+              }
+            `}
+            </style>
+            <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
+              <Grid.Column style={{ maxWidth: 450 }}>
+                <Header as='h2' color='teal' textAlign='center'>
+                  <Image src='/logo.png' /> Log-in to your account
+                </Header>
+                <Form onSubmit={handleSubmit(this.onsubmit)} size='large'>
+                  <Segment stacked>
+                    <Field
+                        component={Form.Input}
+                        name="email"
+                        fluid 
+                        icon='user' 
+                        iconPosition='left' 
+                        placeholder='E-mail address' 
+                    />
+                    <Field
+                        name="password"
+                        component={Form.Input}
+                      fluid
+                      icon='lock'
+                      iconPosition='left'
+                      placeholder='Password'
+                      type='password'
+                    />
+        
+                    <Button color='teal' fluid size='large'>
+                      Login
                     </Button>
-                    </form>
-                </Paper>
-            </main>
+                  </Segment>
+                </Form>
+                <Message>
+                  New to us? <a href='#'>Sign Up</a>
+                </Message>
+              </Grid.Column>
+            </Grid>
+          </div>
         );
     }
 }
 
-SignUp.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
+
 
 function mapStateToProps(state) {
     return {
@@ -151,6 +114,5 @@ function mapStateToProps(state) {
 
 export default compose(
     connect(mapStateToProps, actions),
-    withStyles(styles),
     reduxForm({ form: "SignUp" })
 )(SignUp);

@@ -24,7 +24,7 @@ ReactDOM.render(
     }, applyMiddleware(reduxThunk))}>
         <BrowserRouter>
             <App>
-                <Route exact path="/" component={authGuard(Home)} />
+                <Route exact path="/" component={Home} />
                 <Route exact path="/login" component={Signin} />
                 <Route exact path="/signup" component={Signup} />
             </App>
