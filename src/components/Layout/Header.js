@@ -21,9 +21,10 @@ class ButtonAppBar extends React.Component {
     render() {
         const { activeItem } = this.state
 
-        return (
-            <Container>
-                <Menu secondary>
+        return ( 
+            <Menu secondary pointing className="fixed">
+                <Container>
+               
                     <Menu.Menu position='right'>
                         <Menu.Item name='Add Company' active={activeItem === 'Add Company'} onClick={this.handleItemClick} />
                         <Menu.Item
@@ -51,8 +52,9 @@ class ButtonAppBar extends React.Component {
                         }
 
                     </Menu.Menu>
-                </Menu>
-            </Container>
+                
+                </Container>
+            </Menu>
 
         );
     }
