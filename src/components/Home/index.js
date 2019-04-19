@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Grid, Menu, Segment } from 'semantic-ui-react';
+import { Grid, Menu } from 'semantic-ui-react';
 import Header from "../Layout/Header";
 
 export default class MenuExampleTabularOnLeft extends Component {
@@ -14,7 +14,7 @@ export default class MenuExampleTabularOnLeft extends Component {
             <React.Fragment>
                 <Header></Header>
                 <Grid style={{height: '100%'}}>
-                    <Grid.Column width={3} style={{height: '100%'}}>
+                    <Grid.Column width={3} style={{height: '100%', paddingBottom: 0}}>
                         <Menu fluid vertical pointing style={{height: '100%'}}>
                             <Menu.Item name='bio' active={activeItem === 'bio'} onClick={this.handleItemClick} />
                             <Menu.Item name='pics' active={activeItem === 'pics'} onClick={this.handleItemClick} />

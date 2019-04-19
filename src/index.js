@@ -10,7 +10,7 @@ import App from "./components/App";
 import Home from "./components/Home";
 import Signin from "./components/Signin";
 import reducers from "./reducers"
-//import authGuard from "./components/HOCs/auth-guard";
+import authGuard from "./components/HOCs/auth-guard";
 
 const JWT_TOKEN = localStorage.getItem("JWT_TOKEN")
 
@@ -23,7 +23,7 @@ ReactDOM.render(
     }, applyMiddleware(reduxThunk))}>
         <BrowserRouter>
             <App>
-                <Route exact path="/" component={Home} />
+                <Route exact path="/" component={authGuard(Home)} />
                 <Route exact path="/login" component={Signin} />
             </App>
         </BrowserRouter>

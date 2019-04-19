@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { reduxForm } from "redux-form";
-import { withRouter } from "react-router-dom";
+import { reduxForm, Field } from "redux-form";
 import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
 
 
@@ -21,7 +20,7 @@ export const renderInput = ({
     )
 
 
-class SignUp extends React.Component {
+class SignIn extends React.Component {
     constructor(props) {
         super(props);
         this.state = { open: false };
@@ -48,22 +47,31 @@ class SignUp extends React.Component {
                         <Header as='h2' color='teal' textAlign='center'>
                             Log-in to your account
                         </Header>
-                        <Form size='large' onSubmit={handleSubmit(this.onsubmit)}>
+                        <form size='large' onSubmit={handleSubmit(this.onsubmit)}>
                             <Segment stacked>
-                                <Form.Input fluid icon='user' iconPosition='left' placeholder='E-mail address' />
-                                <Form.Input
+                                <Field 
+                                    fluid 
+                                    icon='user' 
+                                    iconPosition='left' 
+                                    placeholder='E-mail address' 
+                                    name="email"
+                                    component={Form.Input}
+                                />
+                                <Field
                                     fluid
                                     icon='lock'
                                     iconPosition='left'
                                     placeholder='Password'
                                     type='password'
+                                    name="password"
+                                    component={Form.Input}
                                 />
 
                                 <Button color='teal' fluid size='large'>
                                     Login
                                 </Button>
                             </Segment>
-                        </Form>
+                        </form>
                     </Grid.Column>
                 </Grid>
             </div>
@@ -81,6 +89,5 @@ function mapStateToProps(state) {
 
 export default compose(
     connect(mapStateToProps, actions),
-    reduxForm({ form: "SignUp" }),
-    withRouter
-)(SignUp);
+    reduxForm({ form: "signin" })
+)(SignIn);
