@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { reduxForm, Field } from "redux-form";
+import { reduxForm } from "redux-form";
 import { withRouter } from "react-router-dom";
-import { Button, Form, Modal, Segment, Menu, Icon } from 'semantic-ui-react';
+import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
+
 
 import * as actions from "../../actions"
 
@@ -26,11 +27,8 @@ class SignUp extends React.Component {
         this.state = { open: false };
 
         this.onsubmit = this.onsubmit.bind(this);
-        this.responseGoogle = this.responseGoogle.bind(this);
     }
 
-    show = () => () => this.setState({ open: true })
-    close = () => this.setState({ open: false })
 
     async onsubmit(formData) {
         await this.props.login(formData);
@@ -40,59 +38,35 @@ class SignUp extends React.Component {
         }
     }
 
-    async responseGoogle(response) {
-        console.log(response.accessToken);
-        await this.props.loginWithGoogle({
-            access_token: response.accessToken
-        });
-        if (!this.props.errorMessage) {
-            this.props.history.push("/");
-        }
-    }
-
-
     render() {
         const { handleSubmit } = this.props;
         return (
-            <React.Fragment>
-                <Menu.Item size="mini" onClick={this.show()}>Sign In</Menu.Item >
+            <div className='login-form' style={{ height: '100%' }}>
 
-                <Modal size="mini" open={this.state.open} onClose={this.close}>
-                    <Segment>
+                <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
+                    <Grid.Column style={{ maxWidth: 450 }}>
+                        <Header as='h2' color='teal' textAlign='center'>
+                            Log-in to your account
+                        </Header>
+                        <Form size='large' onSubmit={handleSubmit(this.onsubmit)}>
+                            <Segment stacked>
+                                <Form.Input fluid icon='user' iconPosition='left' placeholder='E-mail address' />
+                                <Form.Input
+                                    fluid
+                                    icon='lock'
+                                    iconPosition='left'
+                                    placeholder='Password'
+                                    type='password'
+                                />
 
-                    <Button color='linkedin' fluid size='small'>
-                        <Icon name='linkedin' /> Continue with LinkedIn
-                    </Button>
-                    <br />
-                    <Form onSubmit={handleSubmit(this.onsubmit)} size='large'>
-                        
-                            <Field
-                                component={Form.Input}
-                                name="email"
-                                fluid
-                                icon='user'
-                                iconPosition='left'
-                                placeholder='E-mail address'
-                            />
-                            <Field
-                                name="password"
-                                component={Form.Input}
-                                fluid
-                                icon='lock'
-                                iconPosition='left'
-                                placeholder='Password'
-                                type='password'
-                            />
-                            <p>
-                                <small as='h6'>Forget your </small>
-                                <a href="/">password</a>
-                            </p>
-
-                            <Button content='Login' primary />
-                       
-                    </Form> </Segment>
-                </Modal>
-            </React.Fragment>
+                                <Button color='teal' fluid size='large'>
+                                    Login
+                                </Button>
+                            </Segment>
+                        </Form>
+                    </Grid.Column>
+                </Grid>
+            </div>
         );
     }
 }

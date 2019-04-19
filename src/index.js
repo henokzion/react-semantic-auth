@@ -9,7 +9,6 @@ import reduxThunk from "redux-thunk";
 import App from "./components/App";
 import Home from "./components/Home";
 import Signin from "./components/Signin";
-import Signup from "./components/Signup";
 import reducers from "./reducers"
 //import authGuard from "./components/HOCs/auth-guard";
 
@@ -26,7 +25,6 @@ ReactDOM.render(
             <App>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/login" component={Signin} />
-                <Route exact path="/signup" component={Signup} />
             </App>
         </BrowserRouter>
     </Provider>

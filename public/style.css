@@ -1,4 +1,11 @@
 html, body{
     margin: 0px;
     padding : 0px;
+    height: 100%;
+}
+
+body > div,
+body > div > div,
+body > div > div > div.login-form {
+  height: 100%;
 }

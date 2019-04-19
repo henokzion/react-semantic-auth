@@ -2,10 +2,9 @@ import React from 'react';
 import { Menu, Container } from 'semantic-ui-react'
 import { connect } from "react-redux";
 import { compose } from "redux";
+import { withRouter } from "react-router-dom";
 
 import * as actions from "../../actions";
-import Signup from "../Signup";
-import Signin from "../Signin";
 
 class ButtonAppBar extends React.Component {
     constructor(props) {
@@ -38,17 +37,19 @@ class ButtonAppBar extends React.Component {
                             onClick={this.handleItemClick}
                         />
                         {
-                            this.props.isAuth?
+                            this.props.isAuth ?
                                 <Menu.Item
                                     name='logout'
                                     active={activeItem === 'logout'}
                                     onClick={this.logout}
-                                />:
-                                [<Signup key="signup"/>,
-                                <Signin key="signin"/>]
+                                /> : <Menu.Item
+                                    name='Login'
+                                    active={activeItem === 'Login'}
+                                    onClick={()=>this.props.history.push("/login")}
+                                />
 
                         }
-                        
+
                     </Menu.Menu>
                 </Menu>
             </Container>
@@ -64,5 +65,6 @@ function mapStateToProps(state) {
 }
 
 export default compose(
-    connect(mapStateToProps, actions)
+    connect(mapStateToProps, actions),
+    withRouter
 )(ButtonAppBar);
