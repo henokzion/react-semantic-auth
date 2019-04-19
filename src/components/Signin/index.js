@@ -5,8 +5,7 @@ import { reduxForm, Field } from "redux-form";
 import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
 
 
-import * as actions from "../../actions"
-
+import * as actions from "../../actions";
 
 class SignIn extends React.Component {
     constructor(props) {
@@ -35,7 +34,7 @@ class SignIn extends React.Component {
                         <Header as='h2' color='teal' textAlign='center'>
                             Log-in to your account
                         </Header>
-                        <form size='large' onSubmit={handleSubmit(this.onsubmit)}>
+                        <Form size='large' onSubmit={handleSubmit(this.onsubmit)}>
                             <Segment stacked>
                                 <Field 
                                     fluid 
@@ -59,7 +58,7 @@ class SignIn extends React.Component {
                                     Login
                                 </Button>
                             </Segment>
-                        </form>
+                        </Form>
                     </Grid.Column>
                 </Grid>
             </div>
