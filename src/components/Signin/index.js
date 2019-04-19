@@ -7,18 +7,6 @@ import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
 
 import * as actions from "../../actions"
 
-export const renderInput = ({
-    input,
-    label,
-    meta: { touched, error },
-    ...custom
-}) => (
-        <input
-            {...input}
-            {...custom}
-        />
-    )
-
 
 class SignIn extends React.Component {
     constructor(props) {
